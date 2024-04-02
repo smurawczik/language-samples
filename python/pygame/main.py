@@ -46,8 +46,10 @@ while running:
     # Move enemy
     enemy_rect.y += enemy_speed
     if enemy_rect.y > HEIGHT:
-        enemy_rect.x = random.randint(0, WIDTH - enemy_size)
+        enemy_rect.x = random.randint(player_rect.x - 50, player_rect.x + 50)
         enemy_rect.y = -50
+        if enemy_speed < 10:
+            enemy_speed += 0.5
 
     # Check for collision
     if player_rect.colliderect(enemy_rect):
