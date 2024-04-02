@@ -30,10 +30,20 @@ int main()
   printw("File '%s' has been created. You can start typing.\n", filename);
 
   int ch;
+  int line = 1;
+  printw("%d: ", line);
   while ((ch = getch()) != 24)
   { // Ctrl+X to exit
     putc(ch, file);
-    printw("%c", ch);
+    if (ch == '\n')
+    {
+      line++;
+      printw("\n%d: ", line);
+    }
+    else
+    {
+      printw("%c", ch);
+    }
   }
 
   // Close file
