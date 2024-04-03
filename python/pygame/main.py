@@ -46,18 +46,6 @@ while running:
             if event.type == pygame.QUIT:
                 running = False
                 game_over = True
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
-                    running = False
-                    game_over = True
-                if event.key == pygame.K_r:
-                    # Reset game variables
-                    player_rect.x = WIDTH // 2 - player_size // 2
-                    player_rect.y = HEIGHT - player_size - 10
-                    enemy_rect.x = random.randint(0, WIDTH - enemy_size)
-                    enemy_rect.y = 10
-                    enemy_speed = 3
-                    game_over = False
 
         # Move player
         keys = pygame.key.get_pressed()
