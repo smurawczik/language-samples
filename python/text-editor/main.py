@@ -101,6 +101,7 @@ class TextEditor(tk.Tk):
                 with open(file_path, "r") as file:
                     self.text_widget.delete("1.0", tk.END)
                     self.text_widget.insert("1.0", file.read())
+                    self.highlight_words()
 
     def save_file(self, event=None):
         if not hasattr(self, "file_path"):
@@ -124,7 +125,8 @@ class TextEditor(tk.Tk):
         highlight_dict = {
             "python": "blue",
             "text": "red",
-            "editor": "green"
+            "editor": "green",
+            "class": "purple",
         }
 
         # Remove existing tags
