@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk  # Import ttk module for themed widgets
+from tkinter import ttk
 from tkinter import filedialog, messagebox
 import re
 import os
@@ -8,26 +8,32 @@ class TextEditor(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Text Editor")
-        self.geometry("600x400")
+        self.geometry("1200x800")
         
         frame = tk.Frame(self)
         frame.pack(expand=True, fill="both")
 
         self.create_menu()
         
+        # Frame to contain both the text widget and the scrolled listbox
+        editor_frame = tk.Frame(frame)
+        editor_frame.pack(side="right", expand=True, fill="both")
+
         # Listbox to display files
-        self.file_listbox = tk.Listbox(frame, width=20)
-        self.file_listbox.pack(side="left", fill="both", expand=True)
+        self.file_listbox = tk.Listbox(frame, width=30)
+        self.file_listbox.pack(side="left", fill="y")
         self.file_listbox.bind("<Double-Button-1>", self.load_file)
+        self.file_listbox.bind("<Motion>", self.on_hover)  # Hover effect
+        self.file_listbox.bind("<Leave>", self.unhover_all)  # Hover effect
 
         # Scrollbar for the listbox
-        listbox_scrollbar = ttk.Scrollbar(self.file_listbox, orient="vertical", command=self.file_listbox.yview)
-        listbox_scrollbar.pack(side="right", fill="y")
+        listbox_scrollbar = ttk.Scrollbar(editor_frame, orient="vertical", command=self.file_listbox.yview)
+        listbox_scrollbar.pack(side="left", fill="y")
         self.file_listbox.config(yscrollcommand=listbox_scrollbar.set)
 
         # Text widget
-        self.text_widget = tk.Text(frame, wrap="word", highlightcolor="dodgerblue", insertbackground="dodgerblue", highlightthickness=0, undo=True)
-        self.text_widget.pack(side="left", expand=True, fill="both")
+        self.text_widget = tk.Text(editor_frame, width=100, height=50, wrap="word", highlightcolor="dodgerblue", insertbackground="dodgerblue", highlightthickness=0, undo=True)
+        self.text_widget.pack(side="right", expand=True, fill="both")
         self.text_widget.configure(autoseparators=True)
         # Auto focus on the text editor
         self.text_widget.focus_set()
@@ -39,6 +45,8 @@ class TextEditor(tk.Tk):
         text_scrollbar.pack(side="right", fill="y")
         self.text_widget.config(yscrollcommand=text_scrollbar.set)
 
+        self.folder_paths = {}  # Dictionary to store folder paths and their expanded/collapsed state
+        self.folder_path = None  # Currently selected folder path
 
     def create_menu(self):
         menubar = tk.Menu(self)
@@ -72,15 +80,16 @@ class TextEditor(tk.Tk):
 
     def list_files(self, folder_path):
         self.file_listbox.delete(0, tk.END)
+        self.folder_paths[folder_path] = False  # Initially, folder is contracted
         for root, dirs, files in os.walk(folder_path):
-            relative_path = os.path.relpath(root, self.folder_path)
+            relative_path = os.path.relpath(root, folder_path)
             if relative_path == ".":
                 heading = "Root"
             else:
                 heading = os.path.basename(relative_path)
             self.file_listbox.insert(tk.END, heading)
             for file in files:
-                relative_file_path = os.path.relpath(os.path.join(root, file), self.folder_path)
+                relative_file_path = os.path.relpath(os.path.join(root, file), folder_path)
                 self.file_listbox.insert(tk.END, "    " + relative_file_path)
 
     def load_file(self, event=None):
@@ -130,6 +139,21 @@ class TextEditor(tk.Tk):
                 end = f"1.0+{match.end()}c"
                 self.text_widget.tag_add(word, start, end)
                 self.text_widget.tag_config(word, foreground=color)
+
+    def on_hover(self, event=None):
+        """Change background color on hovering over items."""
+        index = self.file_listbox.nearest(event.y)
+        self.unhover_all()
+        if index >= 0:
+            self.file_listbox.itemconfigure(index, background="dodgerblue")
+        else:
+            self.unhover_all()
+            
+    def unhover_all(self, event=None):
+        """Change background color of all items to white."""
+        # unhovers all other items
+        for i in range(self.file_listbox.size()):
+            self.file_listbox.itemconfigure(i, background="black")
 
 if __name__ == "__main__":
     app = TextEditor()
