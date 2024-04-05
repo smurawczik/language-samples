@@ -83,4 +83,6 @@ function findAllWords(node: TrieNode, prefix: string): string[] {
 
 // Example usage
 const prefix = "app";
+console.time(`Autocomplete suggestions for '${prefix}'`);
 console.log(`Autocomplete suggestions for '${prefix}':`, autocomplete(prefix));
+console.timeEnd(`Autocomplete suggestions for '${prefix}'`);
