@@ -1,10 +1,10 @@
-package org.acme.resource;
+package org.app.resource;
 
 import java.net.URI;
 import java.util.List;
 
-import org.acme.domain.Person;
-import org.acme.repository.PersonRepository;
+import org.app.domain.Person;
+import org.app.repository.PersonRepository;
 
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;

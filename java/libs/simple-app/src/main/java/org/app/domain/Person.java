@@ -1,4 +1,4 @@
-package org.acme.domain;
+package org.app.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
