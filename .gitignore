@@ -1,7 +1,12 @@
+# python
 __pycache__
 
+# ts / js
 node_modules
 
+# helpers
 **.tar.gz
-
 log.txt
+
+# java
+maven-wrapper.jar
