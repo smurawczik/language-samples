@@ -2,8 +2,8 @@ package org.app;
 
 import java.time.LocalDate;
 
-import org.app.domain.Person;
-import org.app.repository.PersonRepository;
+import org.app.Person.domain.Person;
+import org.app.Person.repository.PersonRepository;
 
 import io.quarkus.runtime.StartupEvent;
 import jakarta.enterprise.event.Observes;

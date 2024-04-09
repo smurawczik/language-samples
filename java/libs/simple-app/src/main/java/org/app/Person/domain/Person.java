@@ -1,4 +1,4 @@
-package org.app.domain;
+package org.app.Person.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

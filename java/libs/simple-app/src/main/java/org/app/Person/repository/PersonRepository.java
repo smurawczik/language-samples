@@ -1,11 +1,11 @@
-package org.app.repository;
+package org.app.Person.repository;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import java.util.List;
 
-import org.app.domain.Person;
+import org.app.Person.domain.Person;
 
 @ApplicationScoped
 public class PersonRepository implements PanacheRepository<Person> {

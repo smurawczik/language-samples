@@ -1,10 +1,10 @@
-package org.app.resource;
+package org.app.Person.resource;
 
 import java.net.URI;
 import java.util.List;
 
-import org.app.domain.Person;
-import org.app.repository.PersonRepository;
+import org.app.Person.domain.Person;
+import org.app.Person.repository.PersonRepository;
 
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
